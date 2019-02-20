@@ -18,7 +18,7 @@ public class Processor {
         this.repository = new Repository();
     }
 
-    public String run(String request) throws Exception{
+    public synchronized String run(String request) throws Exception{
         final String message=format("%d: %s", count++, request);
         repository.save(message);
         mailService.send(message);
