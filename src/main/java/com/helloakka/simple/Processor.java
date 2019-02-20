@@ -1,4 +1,4 @@
-package com.helloakka;
+package com.helloakka.simple;
 
 import static java.lang.String.format;
 

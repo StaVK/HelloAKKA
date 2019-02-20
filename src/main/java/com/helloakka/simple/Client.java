@@ -1,4 +1,4 @@
-package com.helloakka;
+package com.helloakka.simple;
 
 
 import org.perf4j.log4j.Log4JStopWatch;
@@ -39,7 +39,7 @@ public class Client implements Runnable{
     public static void main(String[] args) throws Exception {
         final Client client=new Client();
         client.init();
-        Long time=System.currentTimeMillis();
+        long time=System.currentTimeMillis();
         new Thread(client).start();
         new Thread(client).start();
         client.run();
