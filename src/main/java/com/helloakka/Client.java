@@ -1,6 +1,13 @@
 package com.helloakka;
 
-public class Client {
+import org.apache.log4j.spi.LoggerFactory;
+import org.perf4j.log4j.Log4JStopWatch;
+
+import java.util.logging.Logger;
+
+public class Client implements Runnable{
+
+
     private Processor processor;
 
     public void init(){
@@ -11,16 +18,26 @@ public class Client {
         return "Hello AKKA!";
     }
 
-    private void run() throws Exception{
-        for (int i = 0; i < 100; i++) {
-            String response = processor.run(makeRequest());
-            System.out.println(response);
+    public void run(){
+        try {
+            for (int i = 0; i < 100; i++) {
+                Log4JStopWatch stopWatch=new Log4JStopWatch("Client");
+                String response = processor.run(makeRequest());
+                System.out.println(response);
+                stopWatch.stop();
+            }
         }
+        catch (Exception e){
+
+        }
+
 
     }
     public static void main(String[] args) throws Exception {
         final Client client=new Client();
         client.init();
+        new Thread(client).start();
+        new Thread(client).start();
         client.run();
     }
 }
