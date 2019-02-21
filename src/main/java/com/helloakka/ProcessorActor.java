@@ -1,10 +1,13 @@
 package com.helloakka;
 
 import akka.actor.*;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 import static java.lang.String.format;
 
 public class ProcessorActor extends UntypedAbstractActor {
+    private static ActorSystem system;
     private ActorRef repository;
 
     private int count = 0;
@@ -18,8 +21,10 @@ public class ProcessorActor extends UntypedAbstractActor {
     }
 
     public static void main(String[] args) throws Exception {
-        ActorSystem system = ActorSystem.create("ProcessorSystem");
-//        system.actorOf(Props.create(ProcessorActor.class));
+        final Config config= ConfigFactory.load().getConfig("processor");
+
+        system = ActorSystem.create("ProcessorSystem",config);
+        system.actorOf(Props.create(ProcessorActor.class),"processor");
     }
 
     @Override
